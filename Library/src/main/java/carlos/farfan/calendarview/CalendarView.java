@@ -76,11 +76,6 @@ public class CalendarView extends LinearLayout {
         initControl(context, attrs);
     }
 
-    public CalendarView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initControl(context, attrs);
-    }
-
     /**
      *
      * Load component XML layout
@@ -208,7 +203,7 @@ public class CalendarView extends LinearLayout {
             calendar.setTime(day.getDate());
             month = calendar.get(Calendar.MONTH);
             day.setCurrentMonth(isCurrentMonth(month));
-            day.setDisabled(isInRange(day, month));
+            day.setDisabled(day.isCurrentMonth() && isInRange(day));
         }
 
         updateCalendar();
@@ -218,16 +213,11 @@ public class CalendarView extends LinearLayout {
         return month == currentDate.get(Calendar.MONTH);
     }
 
-    private boolean isInRange(CalendarDay day, int month) {
-        if (month == currentDate.get(Calendar.MONTH)) {
-            if (!((minDate != null && minDate.after(day.getDate())) || (maxDate != null && maxDate.before(day.getDate())))) {
-                return decorator != null && decorator.shouldDecorate(day);
-            } else {
-                return true;
-            }
-        } else {
-            return false;
+    private boolean isInRange(CalendarDay day) {
+        if (!((minDate != null && minDate.after(day.getDate())) || (maxDate != null && maxDate.before(day.getDate())))) {
+            return decorator != null && decorator.shouldDecorate(day);
         }
+        return true;
     }
 
     private boolean canGoBack() {

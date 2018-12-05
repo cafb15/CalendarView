@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final LayoutInflater inflater = getLayoutInflater();
+
         CalendarView calendarView = findViewById(R.id.calendar_view);
 
         LinkedHashMap<Integer, boolean[]> map = new LinkedHashMap<>();
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         calendarView.setDaySelectedDecorate(new OnDateSelectedDecorate() {
             @Override
-            public View decorate(Calendar day, LayoutInflater inflater, ViewGroup parent) {
+            public View decorate(Calendar day, ViewGroup parent) {
                 View view = inflater.inflate(R.layout.item_day_selected, parent, false);
 
                 TextView tvDay = view.findViewById(R.id.tv_day);

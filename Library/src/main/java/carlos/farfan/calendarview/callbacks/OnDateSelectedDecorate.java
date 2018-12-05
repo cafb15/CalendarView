@@ -1,6 +1,5 @@
 package carlos.farfan.calendarview.callbacks;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,5 +12,5 @@ import java.util.Calendar;
  */
 public interface OnDateSelectedDecorate {
 
-    View decorate(Calendar day, LayoutInflater inflater, ViewGroup parent);
+    View decorate(Calendar day, ViewGroup parent);
 }

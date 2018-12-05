@@ -48,15 +48,12 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
         //Day to show
         final Calendar calendar = Calendar.getInstance();
         final CalendarDay day = getItem(position);
-
-        if (daySelected != null) {
-            if (day.getDate().getTime() == daySelected.getDate().getTime()) {
-                prevPosition = position;
-                day.setDecorateSelected(true);
-            }
-        }
-
         calendar.setTime(day.getDate());
+
+        if (daySelected != null && day.getDate().getTime() == daySelected.getDate().getTime()) {
+            prevPosition = position;
+            day.setDecorateSelected(true);
+        }
 
         if (convertView == null || convertView instanceof LinearLayout) {
             convertView = inflater.inflate(R.layout.control_calendar_day, parent, false);
@@ -96,10 +93,9 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
 
         if (day.isDecorateSelected()) {
             if (decorate != null) {
-                return decorate.decorate(calendar, inflater, parent);
-            } else {
-                tvDay.setTextColor(Color.CYAN);
+                return decorate.decorate(calendar, parent);
             }
+            tvDay.setTextColor(Color.CYAN);
         }
 
         return convertView;
