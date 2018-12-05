@@ -62,24 +62,17 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
         TextView tvDay = (TextView) convertView;
 
         if (day.isDisabled()) {
-            tvDay.setText(String.valueOf(calendar.get(Calendar.DATE)));
-            tvDay.setTextColor(dayDisabledColor);
+            fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayDisabledColor);
             tvDay.setAlpha(0.5F);
         } else if (day.isCurrentMonth()) {
-            tvDay.setText(String.valueOf(calendar.get(Calendar.DATE)));
-            tvDay.setTextColor(dayColor);
+            fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayColor);
 
             tvDay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     daySelected = null;
                     if (prevPosition != position) {
-                        if (prevPosition != -1) {
-                            CalendarDay calendarDay = getItem(prevPosition);
-                            calendarDay.setDecorateSelected(false);
-                        }
-
-                        prevPosition = position;
+                        disableDaySelected(position);
                         day.setDecorateSelected(true);
                     } else {
                         prevPosition = -1;
@@ -99,6 +92,20 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
         }
 
         return convertView;
+    }
+
+    private void fillDay(TextView tv, String day, int color) {
+        tv.setText(day);
+        tv.setTextColor(color);
+    }
+
+    private void disableDaySelected(int position) {
+        if (prevPosition != -1) {
+            CalendarDay calendarDay = getItem(prevPosition);
+            calendarDay.setDecorateSelected(false);
+        }
+
+        prevPosition = position;
     }
 
     void setOnClickDayListener(OnClickDayListener listener) {
