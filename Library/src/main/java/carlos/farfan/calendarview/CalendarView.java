@@ -34,9 +34,6 @@ public class CalendarView extends LinearLayout {
     // days to show, defaults to six weeks, 42 days
     private static final int DAYS_COUNT = 42;
 
-    // format to month title
-    private static final String DATE_FORMAT = "MMMM yyyy";
-
     //Elements to fill calendar
     private int dayColor;
     private int dayDisabledColor;
@@ -44,7 +41,7 @@ public class CalendarView extends LinearLayout {
     private DayDecorator decorator;
     private Drawable buttonLeft;
     private Drawable buttonRight;
-    private CalendarDay daySelected;
+    private Date daySelected;
 
     private TitleChange titleChange;
 
@@ -60,7 +57,6 @@ public class CalendarView extends LinearLayout {
     private LinearLayout llHeader;
     private ImageView ivPrevious;
     private ImageView ivNext;
-    private TextView tvMonth;
     private GridView gvDays;
 
     //callbacks
@@ -88,7 +84,9 @@ public class CalendarView extends LinearLayout {
         loadStyle(context, attrs);
         uiElements();
         events();
+        limitDefaults();
         daysInMonth();
+        validateDaysDecorated();
         updateCalendar();
     }
 
@@ -111,7 +109,7 @@ public class CalendarView extends LinearLayout {
         llHeader = findViewById(R.id.calendar_header);
         ivPrevious = findViewById(R.id.calendar_prev_button);
         ivNext = findViewById(R.id.calendar_next_button);
-        tvMonth = findViewById(R.id.calendar_month_display);
+        TextView tvMonth = findViewById(R.id.calendar_month_display);
         gvDays = findViewById(R.id.calendrar_grid);
 
         titleChange = new TitleChange(tvMonth);
@@ -147,6 +145,16 @@ public class CalendarView extends LinearLayout {
         });
     }
 
+    private void limitDefaults() {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(1900, Calendar.JANUARY, 1);
+        minDate = calendar.getTime();
+
+        calendar.set(2100, Calendar.DECEMBER, 31);
+        maxDate = calendar.getTime();
+    }
+
     private void daysInMonth() {
         days = new ArrayList<>();
         Calendar calendar = (Calendar) currentDate.clone();
@@ -173,7 +181,7 @@ public class CalendarView extends LinearLayout {
         adapter.setOnClickDayListener(new OnClickDayListener() {
             @Override
             public void onClickDay(CalendarDay day) {
-                daySelected = day;
+                daySelected = day.getDate();
                 listener.onDateSelected(day, adapter);
             }
         });
@@ -214,7 +222,7 @@ public class CalendarView extends LinearLayout {
     }
 
     private boolean isInRange(CalendarDay day) {
-        if (!((minDate != null && minDate.after(day.getDate())) || (maxDate != null && maxDate.before(day.getDate())))) {
+        if (!((minDate.after(day.getDate())) || (maxDate.before(day.getDate())))) {
             return decorator != null && decorator.shouldDecorate(day);
         }
         return true;
@@ -224,14 +232,14 @@ public class CalendarView extends LinearLayout {
         Calendar calendar = (Calendar) currentDate.clone();
         calendar.add(Calendar.MONTH, -1);
 
-        return minDate != null && calendar.get(Calendar.MONTH) == Util.month(minDate);
+        return calendar.get(Calendar.MONTH) >= Util.month(minDate);
     }
 
     private boolean canGoNext() {
         Calendar calendar = (Calendar) currentDate.clone();
         calendar.add(Calendar.MONTH, 1);
 
-        return maxDate != null && calendar.get(Calendar.MONTH) == Util.month(maxDate);
+        return calendar.get(Calendar.MONTH) <= Util.month(maxDate);
     }
 
     private void enabledView(View view, boolean enable) {

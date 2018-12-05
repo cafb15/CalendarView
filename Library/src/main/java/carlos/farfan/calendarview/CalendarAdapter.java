@@ -31,10 +31,10 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
     private int dayColor;
     private int dayDisabledColor;
     private int prevPosition = -1;
-    private CalendarDay daySelected;
+    private Date daySelected;
 
     CalendarAdapter(Context context, List<CalendarDay> days, @ColorInt int dayColor, @ColorInt int dayDisabledColor,
-                    CalendarDay daySelected) {
+                    Date daySelected) {
         super(context, R.layout.control_calendar_day, days);
         this.dayColor = dayColor;
         this.daySelected = daySelected;
@@ -50,7 +50,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
         final CalendarDay day = getItem(position);
         calendar.setTime(day.getDate());
 
-        if (daySelected != null && day.getDate().getTime() == daySelected.getDate().getTime()) {
+        if (daySelected != null && daySelected.getTime() == day.getDate().getTime()) {
             prevPosition = position;
             day.setDecorateSelected(true);
         }
@@ -64,7 +64,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
         if (day.isDisabled()) {
             tvDay.setText(String.valueOf(calendar.get(Calendar.DATE)));
             tvDay.setTextColor(dayDisabledColor);
-            convertView.setAlpha(0.5F);
+            tvDay.setAlpha(0.5F);
         } else if (day.isCurrentMonth()) {
             tvDay.setText(String.valueOf(calendar.get(Calendar.DATE)));
             tvDay.setTextColor(dayColor);
