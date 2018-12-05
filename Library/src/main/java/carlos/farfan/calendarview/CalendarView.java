@@ -127,22 +127,23 @@ public class CalendarView extends LinearLayout {
         ivNext.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentDate.add(Calendar.MONTH, 1);
-                daysInMonth();
-                validateDaysDecorated();
-                updateCalendar();
+                buttonSelect(1);
             }
         });
 
         ivPrevious.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentDate.add(Calendar.MONTH, - 1);
-                daysInMonth();
-                validateDaysDecorated();
-                updateCalendar();
+                buttonSelect(-1);
             }
         });
+    }
+
+    private void buttonSelect(int amount) {
+        currentDate.add(Calendar.MONTH, amount);
+        daysInMonth();
+        validateDaysDecorated();
+        updateCalendar();
     }
 
     private void limitDefaults() {

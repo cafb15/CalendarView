@@ -29,17 +29,16 @@ public class TitleChange {
 
     private final Interpolator interpolator = new DecelerateInterpolator(2f);
 
-    public TitleChange(TextView tvMonth) {
+    TitleChange(TextView tvMonth) {
         this.tvMonth = tvMonth;
 
         Resources res = tvMonth.getResources();
 
         translate = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, DEFAULT_Y_TRANSLATION_DP, res.getDisplayMetrics()
-        );
+                TypedValue.COMPLEX_UNIT_DIP, DEFAULT_Y_TRANSLATION_DP, res.getDisplayMetrics()) * -1;
     }
 
-    public void change(Calendar date) {
+    void change(Calendar date) {
         if (TextUtils.isEmpty(tvMonth.getText())) {
             doChange(date, false);
             return;
@@ -50,48 +49,58 @@ public class TitleChange {
 
     private void doChange(Calendar date, boolean animate) {
         tvMonth.animate().cancel();
-        translation(tvMonth, 0);
+        initState();
 
-        tvMonth.setAlpha(1);
         String title = formatter.format(date.getTime());
-        final String month = title.substring(0, 1).toUpperCase() + title.substring(1);
+        String month = title.substring(0, 1).toUpperCase() + title.substring(1);
 
         if (!animate) {
             tvMonth.setText(month);
         } else {
-            final int translation = translate * -1;
-            ViewPropertyAnimator propertyAnimator = tvMonth.animate();
-            propertyAnimator.translationY(translation);
-
-            propertyAnimator
-                    .alpha(0)
-                    .setDuration(100)
-                    .setInterpolator(interpolator)
-                    .setListener(new AnimatorListener() {
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-                            translation(tvMonth, 0);
-                            tvMonth.setAlpha(1);
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            tvMonth.setText(month);
-                            translation(tvMonth, translation);
-
-                            ViewPropertyAnimator viewPropertyAnimator = tvMonth.animate();
-                            viewPropertyAnimator.translationY(0);
-
-                            viewPropertyAnimator
-                                    .alpha(1)
-                                    .setDuration(100)
-                                    .setInterpolator(interpolator)
-                                    .setListener(new AnimatorListener())
-                                    .start();
-                        }
-                    }).start();
+            animateChange(month);
         }
+    }
+
+    private void initState() {
+        translation(tvMonth, 0);
+        tvMonth.setAlpha(1);
+    }
+
+    private void animateChange(final String month) {
+        ViewPropertyAnimator propertyAnimator = tvMonth.animate();
+
+        propertyAnimator
+                .translationY(translate)
+                .alpha(0)
+                .setDuration(100)
+                .setInterpolator(interpolator)
+                .setListener(new AnimatorListener() {
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        initState();
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        animatePostChange(month);
+                    }
+                }).start();
+    }
+
+    private void animatePostChange(String month) {
+        tvMonth.setText(month);
+        translation(tvMonth, translate);
+
+        ViewPropertyAnimator viewPropertyAnimator = tvMonth.animate();
+
+        viewPropertyAnimator
+                .translationY(0)
+                .alpha(1)
+                .setDuration(100)
+                .setInterpolator(interpolator)
+                .setListener(new AnimatorListener())
+                .start();
     }
 
     private void translation(TextView tvMonth, int translate) {
