@@ -67,9 +67,7 @@ public class TitleChange {
     }
 
     private void animateChange(final String month) {
-        ViewPropertyAnimator propertyAnimator = tvMonth.animate();
-
-        propertyAnimator.translationY(translate).alpha(0)
+        tvMonth.animate().translationY(translate).alpha(0)
                 .setDuration(100)
                 .setInterpolator(interpolator)
                 .setListener(new AnimatorListener() {
@@ -90,9 +88,7 @@ public class TitleChange {
         tvMonth.setText(month);
         translation(tvMonth, translate);
 
-        ViewPropertyAnimator viewPropertyAnimator = tvMonth.animate();
-
-        viewPropertyAnimator.translationY(0).alpha(1)
+        tvMonth.animate().translationY(0).alpha(1)
                 .setDuration(100)
                 .setInterpolator(interpolator)
                 .setListener(new AnimatorListener())
