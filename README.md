@@ -3,7 +3,7 @@ A simple library to manage Calendar
 
 [![BCH compliance](https://bettercodehub.com/edge/badge/cafb15/CalendarView?branch=master)](https://bettercodehub.com/)  [![GitHub version](https://badge.fury.io/gh/cafb15%2FCalendarView.svg)](https://badge.fury.io/gh/cafb15%2FCalendarView)  [![](https://jitpack.io/v/cafb15/CalendarView.svg)](https://jitpack.io/#cafb15/CalendarView)  [![Maintainability](https://api.codeclimate.com/v1/badges/e90688f07aa0761d9e41/maintainability)](https://codeclimate.com/github/cafb15/CalendarView/maintainability)
 
-### Intalación
+### Instalación
  * Agrega la siguiente configuración en tu build.gradle (módulo)
  ```
  gradle
