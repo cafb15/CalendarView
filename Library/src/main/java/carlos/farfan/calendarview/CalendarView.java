@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridView;
@@ -83,7 +81,6 @@ public class CalendarView extends LinearLayout {
 
         loadStyle(context, attrs);
         uiElements();
-        events();
         limitDefaults();
         daysInMonth();
         validateDaysDecorated();
@@ -94,7 +91,7 @@ public class CalendarView extends LinearLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CalendarView);
 
         try {
-            dayColor = typedArray.getColor(R.styleable.CalendarView_dayColor, getThemeAccentColor(context));
+            dayColor = typedArray.getColor(R.styleable.CalendarView_dayColor, Util.getThemeAccentColor(context));
             dayDisabledColor = typedArray.getColor(R.styleable.CalendarView_dayColor, Color.GRAY);
             buttonLeft = typedArray.getDrawable(R.styleable.CalendarView_buttonLeft);
             buttonRight = typedArray.getDrawable(R.styleable.CalendarView_buttonRight);
@@ -121,9 +118,7 @@ public class CalendarView extends LinearLayout {
         if (buttonRight != null) {
             ivNext.setImageDrawable(buttonRight);
         }
-    }
 
-    private void events() {
         ivNext.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,20 +185,6 @@ public class CalendarView extends LinearLayout {
         adapter.setDaySelectedDecorate(decorate);
     }
 
-    private static int getThemeAccentColor(Context context) {
-        int colorAttr;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            colorAttr = android.R.attr.colorAccent;
-        } else {
-            //Get colorAccent defined for AppCompat
-            colorAttr =
-                    context.getResources().getIdentifier("colorAccent", "attr", context.getPackageName());
-        }
-        TypedValue outValue = new TypedValue();
-        context.getTheme().resolveAttribute(colorAttr, outValue, true);
-        return outValue.data;
-    }
-
     private void validateDaysDecorated() {
         Calendar calendar = Calendar.getInstance();
         int month;
@@ -249,24 +230,12 @@ public class CalendarView extends LinearLayout {
     }
 
     public void setMinDate(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-
-        this.minDate = calendar.getTime();
+        this.minDate = Util.setDate(date, 0);
         validateDaysDecorated();
     }
 
     public void setMaxDate(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 24);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-
-        this.maxDate = calendar.getTime();
+        this.maxDate = Util.setDate(date, 24);
         validateDaysDecorated();
     }
 
