@@ -12,4 +12,4 @@ android:
     - extra-android-m2repository
 
 before_install:
-- yes | sdkmanager "platforms:android-28"
+- yes | sdkmanager "platforms;android-28"
