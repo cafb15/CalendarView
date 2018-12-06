@@ -1,9 +1,9 @@
 language: android
-
+# Allows to install dependencies via apt-get when using Travis's new container-based infrastructure.
 sudo: false
-
 android:
   components:
+    # Note that the tools section appears twice on purpose as it’s required to get the newest Android SDK tools.
     - tools
     - platform-tools
     - tools
@@ -12,4 +12,4 @@ android:
     - extra-android-m2repository
 
 before_install:
-- yes | sdkmanager "platforms;android-28"
+- yes | sdkmanager "platforms;android-28" # https://github.com/travis-ci/travis-ci/issues/8651
