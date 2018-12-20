@@ -16,7 +16,7 @@ A simple library to manage Calendar
  * Agrega la librería en tus dependencias en tu build.gradle (app)
  ```
  dependencies {
-         implementation 'com.github.cafb15:CalendarView:0.1.0'
+         implementation 'com.github.cafb15:CalendarView:0.2.0'
  }
  ```
 
