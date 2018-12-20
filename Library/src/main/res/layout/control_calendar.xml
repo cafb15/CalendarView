@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="12dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:paddingBottom="12dp">
 
         <ImageView
             android:id="@+id/calendar_prev_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/chevron_left"
             android:layout_alignParentLeft="true"/>
 
@@ -37,8 +37,8 @@
 
         <ImageView
             android:id="@+id/calendar_next_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/chevron_right"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
@@ -46,7 +46,8 @@
     <LinearLayout
         android:id="@+id/calendar_header"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="20dp"
+        android:layout_marginTop="26dp">
 
         <TextView
             android:layout_width="0dp"

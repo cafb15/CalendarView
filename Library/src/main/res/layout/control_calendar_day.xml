@@ -9,6 +9,6 @@
     android:textSize="19sp"
     android:gravity="center"
     android:textStyle="bold"
-    android:paddingTop="17dp"
-    android:paddingBottom="17dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
     android:textColor="@android:color/white"/>
