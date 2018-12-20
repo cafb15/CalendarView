@@ -6,7 +6,6 @@ A simple library to manage Calendar
 ### Instalación
  * Agrega la siguiente configuración en tu build.gradle (módulo)
  ```
- gradle
  allProjects {
      repositories {
          maven { url 'https://jitpack.io' }
@@ -16,7 +15,6 @@ A simple library to manage Calendar
  
  * Agrega la librería en tus dependencias en tu build.gradle (app)
  ```
- gradle
  dependencies {
          implementation 'com.github.cafb15:CalendarView:0.1.0'
  }
