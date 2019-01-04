@@ -68,11 +68,11 @@ public class MainActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(dayMin.year, dayMin.month - 1, dayMin.days.get(0).day);
-        calendarView.setMinDate(calendar.getTime());
+        calendarView.setMinDate(Calendar.getInstance().getTime());
 
         Calendar cal = Calendar.getInstance();
         cal.set(dayMax.year, dayMax.month - 1, dayMax.days.get(lastDay).day);
-        calendarView.setMaxDate(cal.getTime());
+//        calendarView.setMaxDate(cal.getTime());
 
         calendarView.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override

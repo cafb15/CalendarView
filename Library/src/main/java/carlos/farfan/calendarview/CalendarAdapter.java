@@ -69,7 +69,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
             click(tvDay, position, day);
         }
 
-        if (day.isDecorateSelected()) {
+        if (day.isDecorateSelected() && day.isCurrentMonth()) {
 
             if (decorate != null) {
                 View view = decorate.decorate(calendar, parent);
