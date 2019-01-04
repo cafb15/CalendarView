@@ -94,9 +94,6 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
                 if (prevPosition != position) {
                     disableDaySelected(position);
                     day.setDecorateSelected(true);
-                } else {
-                    prevPosition = -1;
-                    day.setDecorateSelected(false);
                 }
 
                 listener.onClickDay(day);
