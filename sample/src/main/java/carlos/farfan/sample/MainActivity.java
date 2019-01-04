@@ -99,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static class DaysDisableDecorator implements DayDecorator {
 
-        private static LinkedHashMap<Integer, boolean[]> map;
         private static boolean[] daysTable;
-        private static int currentMonth;
+        private static int currentMonth = -1;
+        private static LinkedHashMap<Integer, boolean[]> map;
 
         private static void setMap(LinkedHashMap<Integer, boolean[]> hashMap) {
             map = hashMap;

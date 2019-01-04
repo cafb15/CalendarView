@@ -6,5 +6,6 @@
         <attr name="daySelectedLayout" format="reference"/>
         <attr name="buttonLeft" format="reference"/>
         <attr name="buttonRight" format="reference"/>
+        <attr name="disableSunday" format="boolean"/>
     </declare-styleable>
 </resources>

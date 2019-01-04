@@ -35,6 +35,7 @@ public class CalendarView extends LinearLayout {
     //Elements to fill calendar
     private int dayColor;
     private int dayDisabledColor;
+    private boolean disableSunday;
     private List<CalendarDay> days;
     private DayDecorator decorator;
     private Drawable buttonLeft;
@@ -93,6 +94,7 @@ public class CalendarView extends LinearLayout {
         try {
             dayColor = typedArray.getColor(R.styleable.CalendarView_dayColor, Util.getThemeAccentColor(context));
             dayDisabledColor = typedArray.getColor(R.styleable.CalendarView_dayColor, Color.GRAY);
+            disableSunday = typedArray.getBoolean(R.styleable.CalendarView_disableSunday, false);
             buttonLeft = typedArray.getDrawable(R.styleable.CalendarView_buttonLeft);
             buttonRight = typedArray.getDrawable(R.styleable.CalendarView_buttonRight);
         } catch (Exception ex) {
@@ -193,7 +195,7 @@ public class CalendarView extends LinearLayout {
             calendar.setTime(day.getDate());
             month = calendar.get(Calendar.MONTH);
             day.setCurrentMonth(isCurrentMonth(month));
-            day.setDisabled(day.isCurrentMonth() && isInRange(day));
+            day.setDisabled((day.isCurrentMonth() && isInRange(day)) || (day.isCurrentMonth() && disableSunday(calendar.get(Calendar.DAY_OF_WEEK))));
         }
 
         updateCalendar();
@@ -204,24 +206,29 @@ public class CalendarView extends LinearLayout {
     }
 
     private boolean isInRange(CalendarDay day) {
-        if (!((minDate.after(day.getDate())) || (maxDate.before(day.getDate())))) {
+        if (!(minDate.after(day.getDate()) || maxDate.before(day.getDate()))) {
             return decorator != null && decorator.shouldDecorate(day);
         }
         return true;
+    }
+
+    private boolean disableSunday(int day) {
+        boolean value = disableSunday && day == Calendar.SUNDAY;
+        return value;
     }
 
     private boolean canGoBack() {
         Calendar calendar = (Calendar) currentDate.clone();
         calendar.add(Calendar.MONTH, -1);
 
-        return calendar.get(Calendar.MONTH) >= Util.month(minDate);
+        return calendar.get(Calendar.MONTH) >= Util.month(minDate) && calendar.get(Calendar.YEAR) >= Util.year(minDate);
     }
 
     private boolean canGoNext() {
         Calendar calendar = (Calendar) currentDate.clone();
         calendar.add(Calendar.MONTH, 1);
 
-        return calendar.get(Calendar.MONTH) <= Util.month(maxDate);
+        return calendar.get(Calendar.MONTH) <= Util.month(maxDate) && calendar.get(Calendar.YEAR) >= Util.year(minDate);
     }
 
     private void enabledView(View view, boolean enable) {

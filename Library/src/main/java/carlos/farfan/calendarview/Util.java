@@ -20,6 +20,12 @@ public class Util {
         return calendar.get(Calendar.MONTH);
     }
 
+    public static int year(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR);
+    }
+
     public static int getThemeAccentColor(Context context) {
         int colorAttr;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
