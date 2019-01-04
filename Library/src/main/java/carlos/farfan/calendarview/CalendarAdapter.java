@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -91,7 +90,6 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
                 daySelected = null;
                 if (prevPosition != position) {
                     disableDaySelected(position);
