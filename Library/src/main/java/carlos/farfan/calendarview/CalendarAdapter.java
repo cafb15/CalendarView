@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -66,25 +67,31 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
             tvDay.setAlpha(0.5F);
         } else if (day.isCurrentMonth()) {
             fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayColor);
-
-            textClick(tvDay, position, day);
+            click(tvDay, position, day);
         }
 
         if (day.isDecorateSelected()) {
+
             if (decorate != null) {
-                return decorate.decorate(calendar, parent);
+                View view = decorate.decorate(calendar, parent);
+
+                click(view, position, day);
+
+                return view;
             }
+
             tvDay.setTextColor(Color.CYAN);
-            textClick(tvDay, position, day);
+            click(tvDay, position, day);
         }
 
         return convertView;
     }
 
-    private void textClick(TextView tvDay, final int position, final CalendarDay day) {
-        tvDay.setOnClickListener(new View.OnClickListener() {
+    private void click(View view, final int position, final CalendarDay day) {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(v.getContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
                 daySelected = null;
                 if (prevPosition != position) {
                     disableDaySelected(position);
