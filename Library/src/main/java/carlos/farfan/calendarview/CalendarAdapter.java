@@ -67,21 +67,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
         } else if (day.isCurrentMonth()) {
             fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayColor);
 
-            tvDay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    daySelected = null;
-                    if (prevPosition != position) {
-                        disableDaySelected(position);
-                        day.setDecorateSelected(true);
-                    } else {
-                        prevPosition = -1;
-                        day.setDecorateSelected(false);
-                    }
-
-                    listener.onClickDay(day);
-                }
-            });
+            textClick(tvDay, position, day);
         }
 
         if (day.isDecorateSelected()) {
@@ -89,9 +75,28 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
                 return decorate.decorate(calendar, parent);
             }
             tvDay.setTextColor(Color.CYAN);
+            textClick(tvDay, position, day);
         }
 
         return convertView;
+    }
+
+    private void textClick(TextView tvDay, final int position, final CalendarDay day) {
+        tvDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                daySelected = null;
+                if (prevPosition != position) {
+                    disableDaySelected(position);
+                    day.setDecorateSelected(true);
+                } else {
+                    prevPosition = -1;
+                    day.setDecorateSelected(false);
+                }
+
+                listener.onClickDay(day);
+            }
+        });
     }
 
     private void fillDay(TextView tv, String day, int color) {
