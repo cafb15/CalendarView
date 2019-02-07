@@ -34,6 +34,7 @@ public class CalendarView extends LinearLayout {
 
     //Elements to fill calendar
     private int dayColor;
+    private int monthColor;
     private int dayDisabledColor;
     private boolean disableSunday;
     private List<CalendarDay> days;
@@ -92,8 +93,9 @@ public class CalendarView extends LinearLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CalendarView);
 
         try {
-            dayColor = typedArray.getColor(R.styleable.CalendarView_dayColor, Util.getThemeAccentColor(context));
+            dayColor = typedArray.getColor(R.styleable.CalendarView_dayColor, Color.BLACK);
             dayDisabledColor = typedArray.getColor(R.styleable.CalendarView_dayColor, Color.GRAY);
+            monthColor = typedArray.getColor(R.styleable.CalendarView_monthColor, Color.BLACK);
             disableSunday = typedArray.getBoolean(R.styleable.CalendarView_disableSunday, false);
             buttonLeft = typedArray.getDrawable(R.styleable.CalendarView_buttonLeft);
             buttonRight = typedArray.getDrawable(R.styleable.CalendarView_buttonRight);

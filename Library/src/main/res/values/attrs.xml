@@ -3,6 +3,7 @@
     <declare-styleable name="CalendarView">
         <attr name="dayDisabledColor" format="color"/>
         <attr name="dayColor" format="color"/>
+        <attr name="monthColor" format="color"/>
         <attr name="daySelectedLayout" format="reference"/>
         <attr name="buttonLeft" format="reference"/>
         <attr name="buttonRight" format="reference"/>
