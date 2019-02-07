@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         DaysDisableDecorator.setMap(map);
         calendarView.addDecorator(new DaysDisableDecorator());
 
+        calendarView.setDaySelected(Calendar.getInstance().getTime());
+
         Month dayMin = months.get(0);
         Month dayMax = months.get(months.size() - 1);
         int lastDay = dayMax.days.size() - 1;

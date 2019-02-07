@@ -84,9 +84,8 @@ public class CalendarView extends LinearLayout {
         loadStyle(context, attrs);
         uiElements();
         limitDefaults();
-        daysInMonth();
+        daysInMonth(false);
         validateDaysDecorated();
-        updateCalendar();
     }
 
     private void loadStyle(Context context, AttributeSet attrs) {
@@ -113,7 +112,7 @@ public class CalendarView extends LinearLayout {
         TextView tvMonth = findViewById(R.id.calendar_month_display);
         gvDays = findViewById(R.id.calendrar_grid);
 
-        tvMonth.setText(monthColor);
+        tvMonth.setTextColor(monthColor);
 
         titleChange = new TitleChange(tvMonth);
 
@@ -141,7 +140,7 @@ public class CalendarView extends LinearLayout {
 
     private void buttonSelect(int amount) {
         currentDate.add(Calendar.MONTH, amount);
-        daysInMonth();
+        daysInMonth(true);
         validateDaysDecorated();
         updateCalendar();
     }
@@ -156,8 +155,13 @@ public class CalendarView extends LinearLayout {
         maxDate = calendar.getTime();
     }
 
-    private void daysInMonth() {
+    private void daysInMonth(boolean changeMonth) {
         days = new ArrayList<>();
+
+        if (daySelected != null && !changeMonth) {
+            currentDate.setTime(daySelected);
+        }
+
         Calendar calendar = (Calendar) currentDate.clone();
 
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -246,6 +250,12 @@ public class CalendarView extends LinearLayout {
 
     public void setMaxDate(Date date) {
         this.maxDate = Util.setDate(date, 24);
+        validateDaysDecorated();
+    }
+
+    public void setDaySelected(Date daySelected) {
+        this.daySelected = daySelected;
+        daysInMonth(false);
         validateDaysDecorated();
     }
 

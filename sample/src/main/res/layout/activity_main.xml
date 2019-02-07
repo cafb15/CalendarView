@@ -13,10 +13,11 @@
         android:id="@+id/calendar_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:dayColor="@android:color/white"
+        app:disableSunday="true"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        app:disableSunday="true"
+        app:dayColor="@android:color/white"
+        app:monthColor="@android:color/white"
         app:buttonLeft="@drawable/button_calendar_left"
         app:buttonRight="@drawable/button_calendar_right"
         app:dayDisabledColor="@color/colorMarineBlue"/>
