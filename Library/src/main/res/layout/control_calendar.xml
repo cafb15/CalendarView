@@ -29,7 +29,6 @@
             android:gravity="center"
             android:textStyle="bold"
             tools:text="Noviembre 2018"
-            android:textColor="#FFFFFF"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/calendar_next_button"
             android:layout_toRightOf="@id/calendar_prev_button"

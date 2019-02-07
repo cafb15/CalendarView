@@ -113,6 +113,8 @@ public class CalendarView extends LinearLayout {
         TextView tvMonth = findViewById(R.id.calendar_month_display);
         gvDays = findViewById(R.id.calendrar_grid);
 
+        tvMonth.setText(monthColor);
+
         titleChange = new TitleChange(tvMonth);
 
         if (buttonLeft != null) {
@@ -129,7 +131,6 @@ public class CalendarView extends LinearLayout {
                 buttonSelect(1);
             }
         });
-
         ivPrevious.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
