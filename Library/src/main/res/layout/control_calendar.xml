@@ -122,6 +122,6 @@
     <GridView
         android:id="@+id/calendrar_grid"
         android:layout_width="match_parent"
-        android:layout_height="340dp"
+        android:layout_height="wrap_content"
         android:numColumns="7"/>
 </LinearLayout>

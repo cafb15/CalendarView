@@ -59,18 +59,19 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
         }
 
         if (convertView == null || convertView instanceof LinearLayout) {
-            convertView = inflater.inflate(R.layout.control_calendar_day, parent, false);
+            convertView = inflater.inflate(dayCenter ? R.layout.control_calendar_day : R.layout.control_calendar_normal, parent,
+                    false);
         }
 
-        TextView tvDay = (TextView) convertView;
-        tvDay.setGravity(dayCenter ? Gravity.CENTER : Gravity.CENTER_HORIZONTAL);
+        LinearLayout llDay = convertView.findViewById(R.id.ll_day);
+        TextView tvDay = convertView.findViewById(R.id.tv_day);
 
         if (day.isDisabled()) {
             fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayDisabledColor);
             tvDay.setAlpha(0.5F);
         } else if (day.isCurrentMonth()) {
             fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayColor);
-            click(tvDay, position, day);
+            click(llDay, position, day);
         }
 
         if (day.isDecorateSelected() && day.isCurrentMonth()) {

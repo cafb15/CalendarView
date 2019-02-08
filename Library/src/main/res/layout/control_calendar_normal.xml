@@ -5,9 +5,8 @@
     android:id="@+id/ll_day"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp">
+    android:gravity="center_horizontal"
+    android:paddingBottom="32dp">
 
     <TextView
         android:id="@+id/tv_day"
