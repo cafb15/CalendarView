@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +32,14 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
     private int dayColor;
     private int dayDisabledColor;
     private int prevPosition = -1;
+    private boolean dayCenter;
     private Date daySelected;
 
     CalendarAdapter(Context context, List<CalendarDay> days, @ColorInt int dayColor, @ColorInt int dayDisabledColor,
-                    Date daySelected) {
+                    Date daySelected, boolean dayCenter) {
         super(context, R.layout.control_calendar_day, days);
         this.dayColor = dayColor;
+        this.dayCenter = dayCenter;
         this.daySelected = daySelected;
         this.dayDisabledColor = dayDisabledColor;
         inflater = LayoutInflater.from(context);
@@ -60,6 +63,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
         }
 
         TextView tvDay = (TextView) convertView;
+        tvDay.setGravity(dayCenter ? Gravity.CENTER : Gravity.CENTER_HORIZONTAL);
 
         if (day.isDisabled()) {
             fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayDisabledColor);

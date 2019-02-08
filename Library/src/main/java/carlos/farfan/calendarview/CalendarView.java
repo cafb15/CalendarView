@@ -36,6 +36,7 @@ public class CalendarView extends LinearLayout {
     private int dayColor;
     private int monthColor;
     private int dayDisabledColor;
+    private boolean dayCenter;
     private boolean disableSunday;
     private List<CalendarDay> days;
     private DayDecorator decorator;
@@ -96,6 +97,7 @@ public class CalendarView extends LinearLayout {
             dayDisabledColor = typedArray.getColor(R.styleable.CalendarView_dayColor, Color.GRAY);
             monthColor = typedArray.getColor(R.styleable.CalendarView_monthColor, Color.BLACK);
             disableSunday = typedArray.getBoolean(R.styleable.CalendarView_disableSunday, false);
+            dayCenter = typedArray.getBoolean(R.styleable.CalendarView_dayCenter, false);
             buttonLeft = typedArray.getDrawable(R.styleable.CalendarView_buttonLeft);
             buttonRight = typedArray.getDrawable(R.styleable.CalendarView_buttonRight);
         } catch (Exception ex) {
@@ -179,7 +181,7 @@ public class CalendarView extends LinearLayout {
         enabledView(ivPrevious, canGoBack());
         enabledView(ivNext, canGoNext());
 
-        adapter = new CalendarAdapter(getContext(), days, dayColor, dayDisabledColor, daySelected);
+        adapter = new CalendarAdapter(getContext(), days, dayColor, dayDisabledColor, daySelected, dayCenter);
         gvDays.setAdapter(adapter);
 
         titleChange.change(currentDate);

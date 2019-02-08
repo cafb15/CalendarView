@@ -8,5 +8,6 @@
         <attr name="buttonLeft" format="reference"/>
         <attr name="buttonRight" format="reference"/>
         <attr name="disableSunday" format="boolean"/>
+        <attr name="dayCenter" format="boolean"/>
     </declare-styleable>
 </resources>
