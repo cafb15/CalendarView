@@ -12,13 +12,16 @@
     <carlos.farfan.calendarview.CalendarView
         android:id="@+id/calendar_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        app:dayHeight="70dp"
+        app:dayTextSize="19sp"
+        app:monthTextSize="19sp"
         app:disableSunday="true"
+        app:dayLayout="forEvents"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         app:dayColor="@android:color/white"
         app:monthColor="@android:color/white"
         app:buttonLeft="@drawable/button_calendar_left"
-        app:buttonRight="@drawable/button_calendar_right"
-        app:dayDisabledColor="@color/colorMarineBlue"/>
+        app:buttonRight="@drawable/button_calendar_right"/>
 </LinearLayout>

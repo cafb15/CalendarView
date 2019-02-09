@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridView;
@@ -35,14 +36,18 @@ public class CalendarView extends LinearLayout {
     //Elements to fill calendar
     private int dayColor;
     private int monthColor;
+    private int dayLayout;
+    private int dayTextSize;
+    private int monthTextSize;
+    private int dayLayoutHeight;
     private int dayDisabledColor;
-    private boolean dayCenter;
     private boolean disableSunday;
     private List<CalendarDay> days;
     private DayDecorator decorator;
     private Drawable buttonLeft;
     private Drawable buttonRight;
     private Date daySelected;
+    private int spacingDaysWithMonth;
 
     private TitleChange titleChange;
 
@@ -94,12 +99,28 @@ public class CalendarView extends LinearLayout {
 
         try {
             dayColor = typedArray.getColor(R.styleable.CalendarView_dayColor, Color.BLACK);
-            dayDisabledColor = typedArray.getColor(R.styleable.CalendarView_dayColor, Color.GRAY);
+            dayDisabledColor = typedArray.getColor(R.styleable.CalendarView_dayDisabledColor, Color.GRAY);
             monthColor = typedArray.getColor(R.styleable.CalendarView_monthColor, Color.BLACK);
             disableSunday = typedArray.getBoolean(R.styleable.CalendarView_disableSunday, false);
-            dayCenter = typedArray.getBoolean(R.styleable.CalendarView_dayCenter, false);
+            int dayLayoutValue = typedArray.getInt(R.styleable.CalendarView_dayLayout, 1);
             buttonLeft = typedArray.getDrawable(R.styleable.CalendarView_buttonLeft);
             buttonRight = typedArray.getDrawable(R.styleable.CalendarView_buttonRight);
+            spacingDaysWithMonth = typedArray.getDimensionPixelSize(R.styleable.CalendarView_spacingDaysWithMonth, 0);
+            dayLayoutHeight = typedArray.getDimensionPixelSize(R.styleable.CalendarView_dayHeight, 0);
+            dayTextSize = typedArray.getDimensionPixelSize(R.styleable.CalendarView_dayTextSize, 48);
+            monthTextSize = typedArray.getDimensionPixelSize(R.styleable.CalendarView_monthTextSize, 48);
+
+            switch (dayLayoutValue) {
+                case 1:
+                    dayLayout = R.layout.control_calendar_day;
+                    break;
+                case 2:
+                    dayLayout = R.layout.control_calendar_normal;
+                    break;
+                case 3:
+                    dayLayout = R.layout.control_calendar_for_events;
+                    break;
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -114,7 +135,12 @@ public class CalendarView extends LinearLayout {
         TextView tvMonth = findViewById(R.id.calendar_month_display);
         gvDays = findViewById(R.id.calendrar_grid);
 
+        LayoutParams layoutParams = (LayoutParams) llHeader.getLayoutParams();
+        layoutParams.setMargins(0, spacingDaysWithMonth, 0, 0);
+        llHeader.setLayoutParams(layoutParams);
+
         tvMonth.setTextColor(monthColor);
+        tvMonth.setTextSize(TypedValue.COMPLEX_UNIT_PX, monthTextSize);
 
         titleChange = new TitleChange(tvMonth);
 
@@ -181,7 +207,8 @@ public class CalendarView extends LinearLayout {
         enabledView(ivPrevious, canGoBack());
         enabledView(ivNext, canGoNext());
 
-        adapter = new CalendarAdapter(getContext(), days, dayColor, dayDisabledColor, daySelected, dayCenter);
+        adapter = new CalendarAdapter(getContext(), days, dayColor, dayDisabledColor, daySelected, dayLayout, dayLayoutHeight,
+                dayTextSize);
         gvDays.setAdapter(adapter);
 
         titleChange.change(currentDate);

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.view.Gravity;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,15 +32,19 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
     private int dayColor;
     private int dayDisabledColor;
     private int prevPosition = -1;
-    private boolean dayCenter;
+    private int dayLayout;
+    private int dayTextSize;
     private Date daySelected;
+    private int dayLayoutHeight;
 
     CalendarAdapter(Context context, List<CalendarDay> days, @ColorInt int dayColor, @ColorInt int dayDisabledColor,
-                    Date daySelected, boolean dayCenter) {
-        super(context, R.layout.control_calendar_day, days);
+                    Date daySelected, int dayLayout, int dayLayoutHeight, int dayTextSize) {
+        super(context, dayLayout, days);
         this.dayColor = dayColor;
-        this.dayCenter = dayCenter;
+        this.dayLayout = dayLayout;
         this.daySelected = daySelected;
+        this.dayTextSize = dayTextSize;
+        this.dayLayoutHeight = dayLayoutHeight;
         this.dayDisabledColor = dayDisabledColor;
         inflater = LayoutInflater.from(context);
     }
@@ -59,12 +63,15 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
         }
 
         if (convertView == null || convertView instanceof LinearLayout) {
-            convertView = inflater.inflate(dayCenter ? R.layout.control_calendar_day : R.layout.control_calendar_normal, parent,
+            convertView = inflater.inflate(dayLayout, parent,
                     false);
         }
 
         LinearLayout llDay = convertView.findViewById(R.id.ll_day);
         TextView tvDay = convertView.findViewById(R.id.tv_day);
+        tvDay.setTextSize(TypedValue.COMPLEX_UNIT_PX, dayTextSize);
+
+        changeLayoutHeight(dayLayoutHeight, llDay);
 
         if (day.isDisabled()) {
             fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayDisabledColor);
@@ -80,6 +87,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
                 View view = decorate.decorate(calendar, parent);
 
                 click(view, position, day);
+                changeLayoutHeight(dayLayoutHeight, view);
 
                 return view;
             }
@@ -109,6 +117,13 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
     private void fillDay(TextView tv, String day, int color) {
         tv.setText(day);
         tv.setTextColor(color);
+    }
+
+    private void changeLayoutHeight(int height, View view) {
+        if (height != 0) {
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+            view.setLayoutParams(layoutParams);
+        }
     }
 
     private void disableDaySelected(int position) {

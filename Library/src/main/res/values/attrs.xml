@@ -4,10 +4,17 @@
         <attr name="dayDisabledColor" format="color"/>
         <attr name="dayColor" format="color"/>
         <attr name="monthColor" format="color"/>
-        <attr name="daySelectedLayout" format="reference"/>
         <attr name="buttonLeft" format="reference"/>
         <attr name="buttonRight" format="reference"/>
         <attr name="disableSunday" format="boolean"/>
-        <attr name="dayCenter" format="boolean"/>
+        <attr name="spacingDaysWithMonth" format="dimension"/>
+        <attr name="dayTextSize" format="dimension"/>
+        <attr name="monthTextSize" format="dimension"/>
+        <attr name="dayHeight" format="dimension"/>
+        <attr name="dayLayout" format="integer">
+            <enum name="center" value="1"/>
+            <enum name="center_horizontal" value="2"/>
+            <enum name="forEvents" value="3"/>
+        </attr>
     </declare-styleable>
 </resources>

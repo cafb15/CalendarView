@@ -45,8 +45,7 @@
     <LinearLayout
         android:id="@+id/calendar_header"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginTop="26dp">
+        android:layout_height="20dp">
 
         <TextView
             android:layout_width="0dp"
@@ -123,5 +122,6 @@
         android:id="@+id/calendrar_grid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="7"/>
+        android:numColumns="7"
+        android:stretchMode="columnWidth"/>
 </LinearLayout>
