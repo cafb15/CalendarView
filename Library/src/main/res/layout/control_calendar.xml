@@ -27,7 +27,6 @@
             android:layout_height="wrap_content"
             android:textSize="19sp"
             android:gravity="center"
-            android:textStyle="bold"
             tools:text="Noviembre 2018"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/calendar_next_button"

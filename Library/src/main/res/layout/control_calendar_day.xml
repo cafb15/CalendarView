@@ -16,6 +16,5 @@
         android:minHeight="13dp"
         tools:text="0"
         android:textSize="19sp"
-        android:textStyle="bold"
         android:textColor="@android:color/black"/>
 </LinearLayout>
