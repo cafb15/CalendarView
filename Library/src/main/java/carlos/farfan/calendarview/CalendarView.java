@@ -3,6 +3,7 @@ package carlos.farfan.calendarview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -38,7 +39,9 @@ public class CalendarView extends LinearLayout {
     private int monthColor;
     private int dayLayout;
     private int dayTextSize;
+    private int dayTextStyle;
     private int monthTextSize;
+    private int monthTextStyle;
     private int dayLayoutHeight;
     private int dayDisabledColor;
     private boolean disableSunday;
@@ -108,6 +111,8 @@ public class CalendarView extends LinearLayout {
             spacingDaysWithMonth = typedArray.getDimensionPixelSize(R.styleable.CalendarView_spacingDaysWithMonth, 0);
             dayLayoutHeight = typedArray.getDimensionPixelSize(R.styleable.CalendarView_dayHeight, 0);
             dayTextSize = typedArray.getDimensionPixelSize(R.styleable.CalendarView_dayTextSize, 48);
+            dayTextStyle = typedArray.getInt(R.styleable.CalendarView_dayTextStyle, Typeface.NORMAL);
+            monthTextStyle = typedArray.getInt(R.styleable.CalendarView_monthTextStyle, Typeface.NORMAL);
             monthTextSize = typedArray.getDimensionPixelSize(R.styleable.CalendarView_monthTextSize, 48);
 
             switch (dayLayoutValue) {
@@ -141,6 +146,7 @@ public class CalendarView extends LinearLayout {
 
         tvMonth.setTextColor(monthColor);
         tvMonth.setTextSize(TypedValue.COMPLEX_UNIT_PX, monthTextSize);
+        tvMonth.setTypeface(tvMonth.getTypeface(), monthTextStyle);
 
         titleChange = new TitleChange(tvMonth);
 
@@ -208,7 +214,7 @@ public class CalendarView extends LinearLayout {
         enabledView(ivNext, canGoNext());
 
         adapter = new CalendarAdapter(getContext(), days, dayColor, dayDisabledColor, daySelected, dayLayout, dayLayoutHeight,
-                dayTextSize);
+                dayTextSize, dayTextStyle);
         gvDays.setAdapter(adapter);
 
         titleChange.change(currentDate);

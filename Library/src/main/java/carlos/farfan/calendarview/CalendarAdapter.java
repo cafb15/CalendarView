@@ -2,6 +2,7 @@ package carlos.farfan.calendarview;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
@@ -34,16 +35,18 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
     private int prevPosition = -1;
     private int dayLayout;
     private int dayTextSize;
+    private int dayTextStyle;
     private Date daySelected;
     private int dayLayoutHeight;
 
     CalendarAdapter(Context context, List<CalendarDay> days, @ColorInt int dayColor, @ColorInt int dayDisabledColor,
-                    Date daySelected, int dayLayout, int dayLayoutHeight, int dayTextSize) {
+                    Date daySelected, int dayLayout, int dayLayoutHeight, int dayTextSize, int dayTextStyle) {
         super(context, dayLayout, days);
         this.dayColor = dayColor;
         this.dayLayout = dayLayout;
         this.daySelected = daySelected;
         this.dayTextSize = dayTextSize;
+        this.dayTextStyle = dayTextStyle;
         this.dayLayoutHeight = dayLayoutHeight;
         this.dayDisabledColor = dayDisabledColor;
         inflater = LayoutInflater.from(context);
@@ -117,6 +120,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
     private void fillDay(TextView tv, String day, int color) {
         tv.setText(day);
         tv.setTextColor(color);
+        tv.setTypeface(tv.getTypeface(), dayTextStyle);
     }
 
     private void changeLayoutHeight(int height, View view) {

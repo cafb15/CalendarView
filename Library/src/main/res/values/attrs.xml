@@ -10,6 +10,16 @@
         <attr name="spacingDaysWithMonth" format="dimension"/>
         <attr name="dayTextSize" format="dimension"/>
         <attr name="monthTextSize" format="dimension"/>
+        <attr name="dayTextStyle" format="integer">
+            <enum name="normal" value="0"/>
+            <enum name="bold" value="1"/>
+            <enum name="italic" value="2"/>
+        </attr>
+        <attr name="monthTextStyle" format="integer">
+            <enum name="normal" value="0"/>
+            <enum name="bold" value="1"/>
+            <enum name="italic" value="2"/>
+        </attr>
         <attr name="dayHeight" format="dimension"/>
         <attr name="dayLayout" format="integer">
             <enum name="center" value="1"/>
