@@ -65,7 +65,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
             day.setDecorateSelected(true);
         }
 
-        if (convertView == null || convertView instanceof LinearLayout) {
+        if (!(convertView instanceof LinearLayout)) {
             convertView = inflater.inflate(dayLayout, parent,
                     false);
         }
@@ -125,7 +125,8 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
 
     private void changeLayoutHeight(int height, View view) {
         if (height != 0) {
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            layoutParams.height = height;
             view.setLayoutParams(layoutParams);
         }
     }
