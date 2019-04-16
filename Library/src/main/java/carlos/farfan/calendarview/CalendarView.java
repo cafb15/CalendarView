@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 import carlos.farfan.calendarview.callbacks.DayDecorator;
+import carlos.farfan.calendarview.callbacks.EventsDecorator;
 import carlos.farfan.calendarview.callbacks.OnClickDayListener;
 import carlos.farfan.calendarview.callbacks.OnDateSelectedDecorate;
 import carlos.farfan.calendarview.callbacks.OnDateSelectedListener;
@@ -50,6 +51,7 @@ public class CalendarView extends LinearLayout {
     private Drawable buttonLeft;
     private Drawable buttonRight;
     private Date daySelected;
+    private int dayLayoutValue;
     private int spacingDaysWithMonth;
 
     private TitleChange titleChange;
@@ -71,6 +73,7 @@ public class CalendarView extends LinearLayout {
     //callbacks
     private OnDateSelectedListener listener;
     private OnDateSelectedDecorate decorate;
+    private EventsDecorator eventsDecorator;
 
     public CalendarView(Context context) {
         super(context);
@@ -105,7 +108,7 @@ public class CalendarView extends LinearLayout {
             dayDisabledColor = typedArray.getColor(R.styleable.CalendarView_dayDisabledColor, Color.GRAY);
             monthColor = typedArray.getColor(R.styleable.CalendarView_monthColor, Color.BLACK);
             disableSunday = typedArray.getBoolean(R.styleable.CalendarView_disableSunday, false);
-            int dayLayoutValue = typedArray.getInt(R.styleable.CalendarView_dayLayout, 1);
+            dayLayoutValue = typedArray.getInt(R.styleable.CalendarView_dayLayout, 1);
             buttonLeft = typedArray.getDrawable(R.styleable.CalendarView_buttonLeft);
             buttonRight = typedArray.getDrawable(R.styleable.CalendarView_buttonRight);
             spacingDaysWithMonth = typedArray.getDimensionPixelSize(R.styleable.CalendarView_spacingDaysWithMonth, 0);
@@ -214,7 +217,7 @@ public class CalendarView extends LinearLayout {
         enabledView(ivNext, canGoNext());
 
         adapter = new CalendarAdapter(getContext(), days, dayColor, dayDisabledColor, daySelected, dayLayout, dayLayoutHeight,
-                dayTextSize, dayTextStyle);
+                dayTextSize, dayTextStyle, dayLayoutValue);
         gvDays.setAdapter(adapter);
 
         titleChange.change(currentDate);
@@ -227,6 +230,7 @@ public class CalendarView extends LinearLayout {
         });
 
         adapter.setDaySelectedDecorate(decorate);
+        adapter.setEventsDayDecorate(eventsDecorator);
     }
 
     private void validateDaysDecorated() {
@@ -255,8 +259,7 @@ public class CalendarView extends LinearLayout {
     }
 
     private boolean disableSunday(int day) {
-        boolean value = disableSunday && day == Calendar.SUNDAY;
-        return value;
+        return disableSunday && day == Calendar.SUNDAY;
     }
 
     private boolean canGoBack() {
@@ -305,5 +308,10 @@ public class CalendarView extends LinearLayout {
     public void setDaySelectedDecorate(OnDateSelectedDecorate decorate) {
         this.decorate = decorate;
         adapter.setDaySelectedDecorate(decorate);
+    }
+
+    public void setEventsDayDecorate(EventsDecorator eventsDecorator) {
+        this.eventsDecorator = eventsDecorator;
+        adapter.setEventsDayDecorate(eventsDecorator);
     }
 }
