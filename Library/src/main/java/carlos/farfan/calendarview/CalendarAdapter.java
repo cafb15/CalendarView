@@ -91,7 +91,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
             click(llDay, position, day);
 
             if (eventsDecorator != null) {
-                eventsDecorator.showEvents(lvEvents, tvDots);
+                eventsDecorator.showEvents(calendar, lvEvents, tvDots);
             }
         } else if (day.isCurrentMonth()) {
             fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayColor);
