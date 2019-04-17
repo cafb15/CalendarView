@@ -90,6 +90,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
             if (eventsDecorator != null) {
                 View view = eventsDecorator.showEvents(calendar, parent);
                 click(view, position, day);
+                changeLayoutHeight(dayLayoutHeight, view);
 
                 return view;
             } else {
