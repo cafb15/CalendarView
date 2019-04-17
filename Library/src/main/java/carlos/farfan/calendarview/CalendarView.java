@@ -314,4 +314,8 @@ public class CalendarView extends LinearLayout {
         this.eventsDecorator = eventsDecorator;
         adapter.setEventsDayDecorate(eventsDecorator);
     }
+
+    public void refreshCalendar() {
+        adapter.notifyDataSetChanged();
+    }
 }
