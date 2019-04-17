@@ -88,8 +88,10 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
             tvDay.setAlpha(0.5F);
         } else if (day.isCurrentMonth() && dayLayoutValue == TypeLayout.DAY_WITH_EVENTS.value()) {
             if (eventsDecorator != null) {
-                View view = eventsDecorator.showEvents(calendar, lvEvents, tvDots);
+                View view = eventsDecorator.showEvents(calendar, parent);
                 click(view, position, day);
+
+                return view;
             } else {
                 fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayColor);
                 click(llDay, position, day);
