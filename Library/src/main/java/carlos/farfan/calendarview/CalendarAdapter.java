@@ -87,11 +87,12 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
             fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayDisabledColor);
             tvDay.setAlpha(0.5F);
         } else if (day.isCurrentMonth() && dayLayoutValue == TypeLayout.DAY_WITH_EVENTS.value()) {
-            fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayColor);
-            click(llDay, position, day);
-
             if (eventsDecorator != null) {
-                eventsDecorator.showEvents(calendar, lvEvents, tvDots);
+                View view = eventsDecorator.showEvents(calendar, lvEvents, tvDots);
+                click(view, position, day);
+            } else {
+                fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayColor);
+                click(llDay, position, day);
             }
         } else if (day.isCurrentMonth()) {
             fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayColor);

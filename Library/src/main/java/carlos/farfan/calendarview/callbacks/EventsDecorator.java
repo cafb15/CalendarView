@@ -1,5 +1,6 @@
 package carlos.farfan.calendarview.callbacks;
 
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -10,5 +11,5 @@ import java.util.Calendar;
  */
 public interface EventsDecorator {
 
-    void showEvents(Calendar day, ListView lvEvents, TextView tvDots);
+    View showEvents(Calendar day, ListView lvEvents, TextView tvDots);
 }
