@@ -74,6 +74,7 @@ public class CalendarView extends LinearLayout {
 
     //WeekHighlight
     private int currentMonth;
+    private int year;
 
     // current month
     private Calendar currentDate = Calendar.getInstance();
@@ -126,6 +127,7 @@ public class CalendarView extends LinearLayout {
         language = locale.getLanguage();
 
         currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+        year = Calendar.getInstance().get(Calendar.YEAR);
         try {
             startWithSunday = typedArray.getBoolean(R.styleable.CalendarView_startWithSunday, language.equals("en"));
             weekText = typedArray.getInt(R.styleable.CalendarView_weekText, WeekTextValue.NORMAL_ALL_CAPS.value());
@@ -341,7 +343,7 @@ public class CalendarView extends LinearLayout {
                 TextView tvDayWeek = (TextView) llHeader.getChildAt(i);
 
                 if (((int) tvDayWeek.getTag()) == currentDate.get(Calendar.WEEK_OF_MONTH)
-                        && currentMonth == currentDate.get(Calendar.MONTH)) {
+                        && currentMonth == currentDate.get(Calendar.MONTH) && year == currentDate.get(Calendar.YEAR)) {
                     tvDayWeek.setTextColor(dayWeekHighlightColor);
                     break;
                 } else {
