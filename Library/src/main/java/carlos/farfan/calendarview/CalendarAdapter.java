@@ -86,7 +86,7 @@ public class CalendarAdapter extends ArrayAdapter<CalendarDay> {
         if (day.isDisabled()) {
             fillDay(tvDay, String.valueOf(calendar.get(Calendar.DATE)), dayDisabledColor);
             tvDay.setAlpha(0.5F);
-        } else if (!day.isDecorateSelected() && day.isCurrentMonth() && dayLayoutValue == TypeLayout.DAY_WITH_EVENTS.value()) {
+        } else if (day.isCurrentMonth() && dayLayoutValue == TypeLayout.DAY_WITH_EVENTS.value()) {
             if (eventsDecorator != null) {
                 View view = eventsDecorator.showEvents(calendar, parent);
                 click(view, position, day);
