@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="week_days">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>0</item>
+    </array>
+
+    <array name="week_days_sunday">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </array>
+
+    <array name="week_days_normal">
+        <item>l</item>
+        <item>m</item>
+        <item>m</item>
+        <item>j</item>
+        <item>v</item>
+        <item>s</item>
+        <item>d</item>
+    </array>
+
+    <array name="week_days_abr">
+        <item>Lun.</item>
+        <item>Mar.</item>
+        <item>Mié.</item>
+        <item>Jue.</item>
+        <item>Vie.</item>
+        <item>Sáb.</item>
+        <item>Dom.</item>
+    </array>
+
+    <array name="week_days_normal_all_caps">
+        <item>L</item>
+        <item>M</item>
+        <item>M</item>
+        <item>J</item>
+        <item>V</item>
+        <item>S</item>
+        <item>D</item>
+    </array>
+
+    <array name="week_days_normal_sunday">
+        <item>d</item>
+        <item>l</item>
+        <item>m</item>
+        <item>m</item>
+        <item>j</item>
+        <item>v</item>
+        <item>s</item>
+    </array>
+
+    <array name="week_days_abr_sunday">
+        <item>Dom.</item>
+        <item>Lun.</item>
+        <item>Mar.</item>
+        <item>Mié.</item>
+        <item>Jue.</item>
+        <item>Vie.</item>
+        <item>Sáb.</item>
+    </array>
+
+    <array name="week_days_normal_all_caps_sunday">
+        <item>D</item>
+        <item>L</item>
+        <item>M</item>
+        <item>M</item>
+        <item>J</item>
+        <item>V</item>
+        <item>S</item>
+    </array>
+</resources>

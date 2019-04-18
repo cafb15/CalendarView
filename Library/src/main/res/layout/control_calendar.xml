@@ -44,77 +44,8 @@
     <LinearLayout
         android:id="@+id/calendar_header"
         android:layout_width="match_parent"
-        android:layout_height="20dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="L"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="M"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="M"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="J"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="V"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="S"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="D"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
+        android:layout_height="20dp"
+        android:orientation="horizontal">
     </LinearLayout>
 
     <GridView

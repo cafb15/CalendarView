@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CalendarView">
+        <attr name="startWithSunday" format="boolean"/>
+        <attr name="dayWeekHighlight" format="boolean"/>
+        <attr name="dayWeekHighlightColor" format="color"/>
+        <attr name="weekText" format="integer">
+            <enum name="normal" value="1"/>
+            <enum name="normalAllCaps" value="2"/>
+            <enum name="abbreviation" value="3"/>
+        </attr>
         <attr name="dayDisabledColor" format="color"/>
         <attr name="dayColor" format="color"/>
         <attr name="monthColor" format="color"/>
+        <attr name="weekColor" format="color"/>
         <attr name="buttonLeft" format="reference"/>
         <attr name="buttonRight" format="reference"/>
         <attr name="disableSunday" format="boolean"/>
         <attr name="spacingDaysWithMonth" format="dimension"/>
         <attr name="dayTextSize" format="dimension"/>
         <attr name="monthTextSize" format="dimension"/>
+        <attr name="weekTextSize" format="dimension"/>
         <attr name="dayTextStyle" format="integer">
             <enum name="normal" value="0"/>
             <enum name="bold" value="1"/>
             <enum name="italic" value="2"/>
         </attr>
         <attr name="monthTextStyle" format="integer">
+            <enum name="normal" value="0"/>
+            <enum name="bold" value="1"/>
+            <enum name="italic" value="2"/>
+        </attr>
+        <attr name="weekTextStyle" format="integer">
             <enum name="normal" value="0"/>
             <enum name="bold" value="1"/>
             <enum name="italic" value="2"/>

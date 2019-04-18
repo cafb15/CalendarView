@@ -7,8 +7,10 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import carlos.farfan.calendarview.callbacks.DayDecorator;
 import carlos.farfan.calendarview.callbacks.EventsDecorator;
@@ -36,14 +39,27 @@ public class CalendarView extends LinearLayout {
     private static final int DAYS_COUNT = 42;
 
     //Elements to fill calendar
+    private boolean startWithSunday;
+    private String language;
+    private int weekText;
+    private int startCount = 3;
+
     private int dayColor;
-    private int monthColor;
-    private int dayLayout;
     private int dayTextSize;
     private int dayTextStyle;
+
+    private int weekColor;
+    private int weekTextSize;
+    private int weekTextStyle;
+    private boolean dayWeekHighlight;
+    private int dayWeekHighlightColor;
+
+    private int monthColor;
     private int monthTextSize;
     private int monthTextStyle;
+
     private int dayLayoutHeight;
+    private int dayLayout;
     private int dayDisabledColor;
     private boolean disableSunday;
     private List<CalendarDay> days;
@@ -55,6 +71,9 @@ public class CalendarView extends LinearLayout {
     private int spacingDaysWithMonth;
 
     private TitleChange titleChange;
+
+    //WeekHighlight
+    private int currentMonth;
 
     // current month
     private Calendar currentDate = Calendar.getInstance();
@@ -103,10 +122,19 @@ public class CalendarView extends LinearLayout {
     private void loadStyle(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CalendarView);
 
+        Locale locale = Locale.getDefault();
+        language = locale.getLanguage();
+
+        currentMonth = Calendar.getInstance().get(Calendar.MONTH);
         try {
+            startWithSunday = typedArray.getBoolean(R.styleable.CalendarView_startWithSunday, language.equals("en"));
+            weekText = typedArray.getInt(R.styleable.CalendarView_weekText, WeekTextValue.NORMAL_ALL_CAPS.value());
+            dayWeekHighlight = typedArray.getBoolean(R.styleable.CalendarView_dayWeekHighlight, true);
+            dayWeekHighlightColor = typedArray.getColor(R.styleable.CalendarView_dayWeekHighlightColor, Color.WHITE);
             dayColor = typedArray.getColor(R.styleable.CalendarView_dayColor, Color.BLACK);
-            dayDisabledColor = typedArray.getColor(R.styleable.CalendarView_dayDisabledColor, Color.GRAY);
             monthColor = typedArray.getColor(R.styleable.CalendarView_monthColor, Color.BLACK);
+            weekColor = typedArray.getColor(R.styleable.CalendarView_weekColor, Color.BLACK);
+            dayDisabledColor = typedArray.getColor(R.styleable.CalendarView_dayDisabledColor, Color.GRAY);
             disableSunday = typedArray.getBoolean(R.styleable.CalendarView_disableSunday, false);
             dayLayoutValue = typedArray.getInt(R.styleable.CalendarView_dayLayout, 1);
             buttonLeft = typedArray.getDrawable(R.styleable.CalendarView_buttonLeft);
@@ -115,8 +143,10 @@ public class CalendarView extends LinearLayout {
             dayLayoutHeight = typedArray.getDimensionPixelSize(R.styleable.CalendarView_dayHeight, 0);
             dayTextSize = typedArray.getDimensionPixelSize(R.styleable.CalendarView_dayTextSize, 48);
             dayTextStyle = typedArray.getInt(R.styleable.CalendarView_dayTextStyle, Typeface.NORMAL);
-            monthTextStyle = typedArray.getInt(R.styleable.CalendarView_monthTextStyle, Typeface.NORMAL);
             monthTextSize = typedArray.getDimensionPixelSize(R.styleable.CalendarView_monthTextSize, 48);
+            monthTextStyle = typedArray.getInt(R.styleable.CalendarView_monthTextStyle, Typeface.NORMAL);
+            weekTextSize = typedArray.getDimensionPixelSize(R.styleable.CalendarView_weekTextSize, 33);
+            weekTextStyle = typedArray.getInt(R.styleable.CalendarView_weekTextStyle, Typeface.NORMAL);
 
             switch (dayLayoutValue) {
                 case 1:
@@ -128,6 +158,10 @@ public class CalendarView extends LinearLayout {
                 case 3:
                     dayLayout = R.layout.control_calendar_for_events;
                     break;
+            }
+
+            if (startWithSunday) {
+                startCount = 2;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -142,6 +176,9 @@ public class CalendarView extends LinearLayout {
         ivNext = findViewById(R.id.calendar_next_button);
         TextView tvMonth = findViewById(R.id.calendar_month_display);
         gvDays = findViewById(R.id.calendrar_grid);
+
+        loadHeader();
+        highlightDayWeek();
 
         LayoutParams layoutParams = (LayoutParams) llHeader.getLayoutParams();
         layoutParams.setMargins(0, spacingDaysWithMonth, 0, 0);
@@ -175,10 +212,44 @@ public class CalendarView extends LinearLayout {
         });
     }
 
+    private void loadHeader() {
+        TextView tvDay;
+        String[] weekDays = new String[0];
+        int[] weekDayNumbers = getResources().getIntArray(startWithSunday ? R.array.week_days_sunday : R.array.week_days);
+
+        switch (weekText) {
+            case 1://NORMAL
+                weekDays = getResources().getStringArray(startWithSunday ? R.array.week_days_normal_sunday : R.array.week_days_normal);
+                break;
+            case 2://NORMAL ALL CAPS
+                weekDays = getResources().getStringArray(startWithSunday ? R.array.week_days_normal_all_caps_sunday :
+                        R.array.week_days_normal_all_caps);
+                break;
+            case 3://ABBREVIATION
+                weekDays = getResources().getStringArray(startWithSunday ? R.array.week_days_abr_sunday : R.array.week_days_abr);
+                break;
+        }
+
+        llHeader.removeAllViews();
+        for (int i = 0; i < 7; i++) {
+            tvDay = new TextView(getContext());
+            tvDay.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            tvDay.setTag(weekDayNumbers[i]);
+            tvDay.setGravity(Gravity.CENTER);
+            tvDay.setText(weekDays[i]);
+            tvDay.setTextColor(weekColor);
+            tvDay.setTypeface(tvDay.getTypeface(), weekTextStyle);
+            tvDay.setTextSize(TypedValue.COMPLEX_UNIT_PX, weekTextSize);
+
+            llHeader.addView(tvDay);
+        }
+    }
+
     private void buttonSelect(int amount) {
         currentDate.add(Calendar.MONTH, amount);
         daysInMonth(true);
         validateDaysDecorated();
+        highlightDayWeek();
         updateCalendar();
     }
 
@@ -202,7 +273,7 @@ public class CalendarView extends LinearLayout {
         Calendar calendar = (Calendar) currentDate.clone();
 
         calendar.set(Calendar.DAY_OF_MONTH, 1);
-        int monthInitCell = calendar.get(Calendar.DAY_OF_WEEK) - 3;
+        int monthInitCell = calendar.get(Calendar.DAY_OF_WEEK) - startCount;
 
         calendar.set(Calendar.DAY_OF_MONTH, -monthInitCell);
 
@@ -260,6 +331,24 @@ public class CalendarView extends LinearLayout {
 
     private boolean disableSunday(int day) {
         return disableSunday && day == Calendar.SUNDAY;
+    }
+
+    private void highlightDayWeek() {
+        if (dayWeekHighlight) {
+            int childCount = llHeader.getChildCount();
+
+            for (int i = 0; i < childCount; i++) {
+                TextView tvDayWeek = (TextView) llHeader.getChildAt(i);
+
+                if (((int) tvDayWeek.getTag()) == currentDate.get(Calendar.WEEK_OF_MONTH)
+                        && currentMonth == currentDate.get(Calendar.MONTH)) {
+                    tvDayWeek.setTextColor(dayWeekHighlightColor);
+                    break;
+                } else {
+                    tvDayWeek.setTextColor(weekColor);
+                }
+            }
+        }
     }
 
     private boolean canGoBack() {

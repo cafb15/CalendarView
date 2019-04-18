@@ -15,13 +15,17 @@
         android:layout_height="match_parent"
         app:dayHeight="70dp"
         app:dayTextSize="19sp"
+        app:weekTextSize="13sp"
         app:monthTextSize="19sp"
         app:disableSunday="true"
         app:dayLayout="forEvents"
+        app:dayWeekHighlight="true"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         app:dayColor="@android:color/white"
+        app:weekColor="@android:color/white"
         app:monthColor="@android:color/white"
         app:buttonLeft="@drawable/button_calendar_left"
+        app:dayWeekHighlightColor="@android:color/black"
         app:buttonRight="@drawable/button_calendar_right"/>
 </LinearLayout>
